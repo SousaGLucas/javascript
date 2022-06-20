@@ -2,12 +2,6 @@
 
     const products = [];
 
-// MODALS STATES
-
-    let listModalOn = false;
-    let dataModalOn = false;
-    let editModalOn = false;
-    let confirmationModalOn = false;
 
 // DOM ELEMENTS
 
@@ -217,6 +211,15 @@
 
         dataModalCloseBtn.addEventListener("click", () => {
             closeDataModal();
+        });
+
+        dataModalCloseBtn.addEventListener("click", () => {
+            closeEditModal();
+    
+            document.querySelector("#edit-id").value = "";
+            document.querySelector("#edit-name").value = "";
+            document.querySelector("#edit-description").value = "";
+            document.querySelector("#edit-value").value = "";
         });
 
 
@@ -487,42 +490,34 @@
         };
         
         function openListModal() {
-            listModalOn = true;
             productsListModal.style.display = "flex";
         };
 
         function closeListModal() {
-            listModalOn = false;
             productsListModal.style.display = "none";
         };
 
         function openDataModal() {
-            dataModalOn = true;
             productDataModal.style.display = "flex";
         };
 
         function closeDataModal() {
-            dataModalOn = false;
             productDataModal.style.display = "none";
         };
 
         function openEditModal() {
-            editModalOn = true;
             editProductModal.style.display = "flex";
         };
 
         function closeEditModal() {
-            editModalOn = false;
             editProductModal.style.display = "none";
         };
 
         function openConfirmationModal() {
-            confirmationModalOn = true;
             actionConfirmationModal.style.display = "flex";
         };
 
         function closeConfirmationModal() {
-            confirmationModalOn = false;
             actionConfirmationModal.style.display = "none";
         };
 
