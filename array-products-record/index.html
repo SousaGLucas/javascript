@@ -92,9 +92,11 @@
                     </button>
                 </div>
 
+                <h1 class="subtitle">Edição de produto</h1>
+
                 <form id="update-form">
-                    <h1 class="title">Edição de produto</h1>
-        
+                    <input id="edit-id" name="edit-id" type="hidden" />
+
                     <div class="input">
                         <label id="edit-name-label" for="edit-name">Nome:</label>
                         <input id="edit-name" name="edit-name" type="text" />
@@ -113,11 +115,9 @@
                         <p id="edit-value-error" class="error"></p>
                     </div>
         
-                    <button id="register-btn" class="black-btn" type="submit">Incluir produto</button>
-                    <button id="list-products-btn" class="text-btn" type="button">Listar produtos</button>
+                    <button id="update-btn" class="black-btn" type="submit">Salvar produto</button>
         
                     <p id="edit-error" class="error"></p>
-                    <p id="edit-success" class="success"></p>
                 </form>
             </div>
 

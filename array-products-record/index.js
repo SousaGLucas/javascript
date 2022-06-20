@@ -50,7 +50,6 @@
     
     // SUCCESS MESSAGES
     const addSuccess = document.querySelector("#add-success");
-    const editSuccess = document.querySelector("#edit-success");
 
     // ERRORS MESSAGES
     const addError = document.querySelector("#add-error");
@@ -63,8 +62,11 @@
     const editDescriptionError = document.querySelector("#edit-description-error");
     const editValueError = document.querySelector("#edit-value-error");
 
+    // FORMS
+    const saveProductForm = document.querySelector("#register-form");
+    const updateProductForm = document.querySelector("#update-form");
+
     // BUTTONS
-    const saveProductBtn = document.querySelector("#register-btn");
     const listProductsBtn = document.querySelector("#list-products-btn");
 
     // MODALS
@@ -138,14 +140,14 @@
             const input = parseInt(event.data, 10);
             let value = event.target.value;
 
-            const position = addValueInput.selectionStart;
+            const position = editValueInput.selectionStart;
             
             resetValueError();
 
             if (isNaN(input) && event.inputType !== "deleteContentBackward") {
                 value = `${value.substring(0, position -1)}${value.substring(position)}`;
-                addValueInput.value = value;
-                addValueInput.setSelectionRange(position - 1, position - 1);
+                editValueInput.value = value;
+                editValueInput.setSelectionRange(position - 1, position - 1);
                 return;
             };
 
@@ -159,32 +161,37 @@
 
             switch (value.length) {
                 case 0:
-                    addValueInput.value = `0,00`;
+                    editValueInput.value = `0,00`;
                     break;
                 case 1:
-                    addValueInput.value = `0,0${value}`;
+                    editValueInput.value = `0,0${value}`;
                     break;
                 case 2:
-                    addValueInput.value = `0,${value}`;
+                    editValueInput.value = `0,${value}`;
                     break;
                 case 3:
-                    addValueInput.value = `${value[0]},${value.slice(-2)}`;
+                    editValueInput.value = `${value[0]},${value.slice(-2)}`;
                     break;
                 default:
-                    addValueInput.value = `${value.slice(0, -2)},${value.slice(-2)}`;
+                    editValueInput.value = `${value.slice(0, -2)},${value.slice(-2)}`;
             };
 
-            addValueInput.setSelectionRange(position, position);
+            // set cursor position
+            if (value.length <= 3 && event.inputType === "deleteContentBackward") {
+                editValueInput.setSelectionRange(position + 1, position + 1);
+            } else {
+                editValueInput.setSelectionRange(position, position);
+            };
         });
 
     // BUTTONS
 
-        saveProductBtn.addEventListener("click", (event) => {
+        saveProductForm.addEventListener("submit", (event) => {
             event.preventDefault();
 
-            const name = addNameInput.value;
-            const description = addDescriptionInput.value;
-            const value = parseFloat(addValueInput.value.replace(",", "."), 10);
+            const name = event.target["add-name"].value;
+            const description = event.target["add-description"].value;
+            const value = parseFloat(event.target["add-value"].value.replace(",", "."), 10);
 
             if (validateEntries(name, description, value) !== true) {
                 return;
@@ -199,8 +206,21 @@
 
             showProductsList();
         });
-    
-    // MODALS
+
+        updateProductForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const id = event.target["edit-id"].value;
+            const name = event.target["edit-name"].value;
+            const description = event.target["edit-description"].value;
+            const value = parseFloat(event.target["edit-value"].value.replace(",", "."), 10);
+
+            if (validateEntries(name, description, value) !== true) {
+                return;
+            };
+
+            updateProduct(id, name, description, value);
+        });
 
         listModalCloseBtn.addEventListener("click", () => {
             closeConfirmationModal();
@@ -209,6 +229,72 @@
             closeListModal();
             closeModalContainer();
         });
+
+        dataModalCloseBtn.addEventListener("click", () => {
+            closeDataModal();
+        });
+
+
+// FUNCTIONS
+
+    function saveProduct(name, description, value) {
+        const product = {
+            "id": products.length + 1,
+            "name": name,
+            "description": description,
+            "value": value,
+            "includedAt": new Date().getTime()
+        };
+
+        products.push(product);
+        setAddSuccess(product);
+
+        resetAddInputs();
+        setTimeout(() => {
+            resetAddSuccess();
+        }, 3000);
+    };
+
+    function updateProduct(id, name, description, value) {
+        let i = 0;
+
+        const product = {
+            "id": parseInt(id, 10),
+            "name": name,
+            "description": description,
+            "value": parseFloat(value, 10),
+            "includedAt": new Date().getTime()
+        };
+
+        do {
+            if (products[i].id === parseInt(id, 10)) {
+                break;
+            };
+
+            i += 1;
+        } while (i < products.length);
+
+        products[i] = product;
+
+        resetEditInputs();
+        closeEditModal();
+        refreshProductsList();
+    };
+
+    function excludeProduct(id) {
+        let i = 0;
+
+        do {
+            if (products[i].id === parseInt(id, 10)) {
+                break;
+            };
+
+            i += 1;
+        } while (i < products.length);
+
+        products.splice(i, 1);
+        refreshProductsList();
+    };
 
 
 // ACTIONS
@@ -358,7 +444,7 @@
             addValueLabel.style.color = "#212121";
         };
 
-    // SHOW
+    // MODALS
         
         function showProductsList() {
             if (productsListContainer.contains(document.querySelector("#modal-list p"))) {
@@ -376,87 +462,84 @@
             
             buildProductsList();
         };
+
+        function refreshProductsList() {
+            removeProductsList();
+
+            if (products.length === 0) {
+                buildEmptyListMessage();
+                return;
+            };
+            
+            buildProductsList();
+        };
     
-// MODALS ACTIONS
-
-    function openModalContainer() {
-        modalContainer.style.display = "flex";
-    };
-
-    function closeModalContainer() {
-        modalContainer.style.display = "none";
-    };
+        function showProductDataModal(product) {
+            openDataModal();
     
-    function openListModal() {
-        listModalOn = true;
-        productsListModal.style.display = "flex";
-    };
-
-    function closeListModal() {
-        listModalOn = false;
-        productsListModal.style.display = "none";
-    };
-
-    function openDataModal() {
-        dataModalOn = true;
-        productDataModal.style.display = "flex";
-    };
-
-    function closeDataModal() {
-        dataModalOn = false;
-        productDataModal.style.display = "none";
-    };
-
-    function openEditModal() {
-        editModalOn = true;
-        editProductModal.style.display = "flex";
-    };
-
-    function closeEditModal() {
-        editModalOn = false;
-        editProductModal.style.display = "none";
-    };
-
-    function openConfirmationModal() {
-        confirmationModalOn = true;
-        actionConfirmationModal.style.display = "flex";
-    };
-
-    function closeConfirmationModal() {
-        confirmationModalOn = false;
-        actionConfirmationModal.style.display = "none";
-    };
-
-
-
-
-// FUNCTIONS
-
-    function saveProduct(name, description, value) {
-        const product = {
-            "id": products.length + 1,
-            "name": name,
-            "description": description,
-            "value": value,
-            "includedAt": new Date().getTime()
+            document.querySelector("#product-id").textContent = product.id;
+            document.querySelector("#product-name").textContent = product.name;
+            document.querySelector("#product-description").textContent = product.description;
+            document.querySelector("#product-value").textContent = `R$ ${product.value.toFixed(2).replace(".", ",")}`;
+            document.querySelector("#product-included-at").textContent = new Date(product.includedAt).toLocaleString();
         };
 
-        products.push(product);
-        setAddSuccess(product);
+        function showEditModal(product) {
+            openEditModal();
+    
+            document.querySelector("#edit-id").value = product.id;
+            document.querySelector("#edit-name").value = product.name;
+            document.querySelector("#edit-description").value = product.description;
+            document.querySelector("#edit-value").value = product.value.toFixed(2).replace(".", ",");
+        };
+    
+        function openModalContainer() {
+            modalContainer.style.display = "flex";
+        };
 
-        console.log(products);
-
-        resetAddInputs();
-        setTimeout(() => {
-            resetAddSuccess();
-        }, 3000);
-    };
-
-    // function showProductData(product) {
-    //     openDataModal();
-
+        function closeModalContainer() {
+            modalContainer.style.display = "none";
+        };
         
-    // };
+        function openListModal() {
+            listModalOn = true;
+            productsListModal.style.display = "flex";
+        };
+
+        function closeListModal() {
+            listModalOn = false;
+            productsListModal.style.display = "none";
+        };
+
+        function openDataModal() {
+            dataModalOn = true;
+            productDataModal.style.display = "flex";
+        };
+
+        function closeDataModal() {
+            dataModalOn = false;
+            productDataModal.style.display = "none";
+        };
+
+        function openEditModal() {
+            editModalOn = true;
+            editProductModal.style.display = "flex";
+        };
+
+        function closeEditModal() {
+            editModalOn = false;
+            editProductModal.style.display = "none";
+        };
+
+        function openConfirmationModal() {
+            confirmationModalOn = true;
+            actionConfirmationModal.style.display = "flex";
+        };
+
+        function closeConfirmationModal() {
+            confirmationModalOn = false;
+            actionConfirmationModal.style.display = "none";
+        };
 
 
 // COMPONENTS
@@ -555,7 +638,10 @@
             button.setAttribute("type", "button");
             button.setAttribute("class", "text-btn");
             button.textContent = product.name;
-            button.onclick = () => {console.log(`Name ${product.id}`)};
+
+            button.onclick = () => {
+                showProductDataModal(product);
+            };
             return button;
         };
 
@@ -563,7 +649,10 @@
             const button = document.createElement("button");
             button.setAttribute("type", "button");
             button.setAttribute("class", "icon-btn");
-            button.onclick = () => {console.log(`Edit ${product.id}`)};
+
+            button.onclick = () => {
+                showEditModal(product);
+            };
 
             const img = document.createElement("img");
             img.setAttribute("src", "./icons/icon-edititon.svg");
@@ -577,7 +666,10 @@
             const button = document.createElement("button");
             button.setAttribute("type", "button");
             button.setAttribute("class", "icon-btn");
-            button.onclick = () => {console.log(`Delete ${product.id}`)};
+
+            button.onclick = () => {
+                excludeProduct(product.id);
+            };
 
             const img = document.createElement("img");
             img.setAttribute("src", "./icons/icon-deletion.svg");
@@ -590,7 +682,3 @@
         function removeProductsList() {
             productsListContainer.removeChild(document.querySelector("#product-table"));
         };
-
-    // PRODUCT DATA
-
-        
