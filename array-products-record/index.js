@@ -1,21 +1,6 @@
 // PRODUCTS
 
-    const products = [
-        {
-            "id": 1,
-            "name": "Produto A",
-            "description": "Descrição do produto.",
-            "value": 23.00,
-            "includedAt": new Date().getTime()
-        },
-        {
-            "id": 2,
-            "name": "Produto B",
-            "description": "Descrição do produto.",
-            "value": 42.00,
-            "includedAt": new Date().getTime()
-        }
-    ];
+    const products = [];
 
 // MODALS STATES
 
