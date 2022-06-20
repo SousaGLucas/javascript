@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Javascript - Aula 10</title>
+
+        <link rel="stylesheet" type="text/css" href="index.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <form id="register-form">
+            <h1 class="title">Registro de produto</h1>
+
+            <div class="input">
+                <label id="product-name-label" for="product-name">Nome:</label>
+                <input id="product-name" name="product-name" type="text" />
+                <p id="product-name-error" class="error"></p>
+            </div>
+
+            <div class="input">
+                <label id="product-description-label" for="product-description">Descrição:</label>
+                <input id="product-description" name="product-description" type="text" />
+                <p id="product-description-error" class="error"></p>
+            </div>
+
+            <div class="input">
+                <label id="product-value-label" for="product-value">Valor (R$):</label>
+                <input id="product-value" name="product-value" type="text" />
+                <p id="product-value-error" class="error"></p>
+            </div>
+
+            <button id="register-btn" class="black-btn" type="submit">Incluir produto</button>
+            <button id="list-products-btn" class="text-btn" type="button">Listar produtos</button>
+
+            <p id="general-error" class="error"></p>
+        </form>
+
+        <div id="modal-container">
+            <div id="products-list-modal" class="modal" draggable="true">
+                <div class="modal-close-btn">
+                    <button id="modal-close-btn" type="button">
+                        <img src="./icons/icon-close-modal.svg" alt="botão para fechar modal" />
+                    </button>
+                </div>
+
+                <div class="modal-content">
+                    <h1 class="subtitle">Lista de produtos</h1>
+
+                    <div class="modal-list">
+                        <p>Não há produtos cadastrados.</p>
+
+                        <table id="product-table">
+                            <tr>
+                                <th class="product-table-id-column">ID</th>
+                                <th class="product-table-name-column">Produto</th>
+                                <th class="product-table-value-column">Valor</th>
+                            </tr>
+
+                            <tr class="product-banner">
+                                <td class="product-table-id-column">1</td>
+                                <td class="product-table-name-column">Produto A</td>
+                                <td class="product-table-value-column">R$ 100,00</td>
+                                <td class="product-table-icon-column">
+                                    <button class="icon-btn" type="button">
+                                        <img src="./icons/icon-edititon.svg" alt="editar produto" />
+                                    </button>
+                                </td>
+                                <td class="product-table-icon-column">
+                                    <button class="icon-btn" type="button">
+                                        <img src="./icons/icon-deletion.svg" alt="excluir produto" />
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="products-data-modal" class="modal" draggable="true">
+                <div class="modal-close-btn">
+                    <button id="modal-close-btn" type="button">
+                        <img src="./icons/icon-close-modal.svg" alt="botão para fechar modal" />
+                    </button>
+                </div>
+
+                <h1 class="subtitle">Dados do produto</h1>
+                
+                <div class="modal-content">
+                    <div id="product-data">
+                        <label>ID</label>
+                        <p>1</p>
+
+                        <label>Nome</label>
+                        <p>Produto A</p>
+
+                        <label>Descrição</label>
+                        <p>Descrição do Produto A</p>
+
+                        <label>Valor</label>
+                        <p>R$ 10,00</p>
+
+                        <label>Incluído em</label>
+                        <p>19/06/2022 - 19:40:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="action-confirmation-modal" class="modal">
+                <div class="modal-content">
+                    <p>Tem certeza que deseja excluir o produto?</p>
+
+                    <div>
+                        <button id="register-btn" class="black-btn" type="submit">Sim</button>
+                        <button id="register-btn" class="red-btn" type="submit">Não</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="index.js"></script>
+    </body>
+</html>
