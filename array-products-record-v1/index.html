@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Javascript - Aula 10</title>
+
+        <link rel="stylesheet" type="text/css" href="index.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <form id="register-form">
+            <h1 class="title">Registro de produto</h1>
+
+            <div class="input">
+                <label id="add-name-label" for="add-name">Nome:</label>
+                <input id="add-name" name="add-name" type="text" />
+                <p id="add-name-error" class="error"></p>
+            </div>
+
+            <div class="input">
+                <label id="add-description-label" for="add-description">Descrição:</label>
+                <input id="add-description" name="add-description" type="text" />
+                <p id="add-description-error" class="error"></p>
+            </div>
+
+            <div class="input">
+                <label id="add-value-label" for="add-value">Valor (R$):</label>
+                <input id="add-value" name="add-value" type="text" />
+                <p id="add-value-error" class="error"></p>
+            </div>
+
+            <button id="register-btn" class="black-btn" type="submit">Incluir produto</button>
+            <button id="list-products-btn" class="text-btn" type="button">Listar produtos</button>
+
+            <p id="add-error" class="error"></p>
+            <p id="add-success" class="success"></p>
+        </form>
+
+        <div id="modal-container">
+            <div id="products-list-modal" class="modal" draggable="true">
+                <div class="modal-close-btn">
+                    <button id="products-list-modal-close-btn" type="button">
+                        <img src="./icons/icon-close-modal.svg" alt="botão para fechar modal" />
+                    </button>
+                </div>
+
+                <div class="modal-content">
+                    <div id="search-input">
+                        <input id="search-term" type="text" placeholder="Buscar produtos por" />
+                        <button id="filter-btn" class="black-btn" type="submit">Buscar</button>
+                    </div>
+
+                    <p id="search-message"></p>
+
+                    <h1 class="subtitle">Lista de produtos</h1>
+
+                    <div id="modal-list"></div>
+                </div>
+            </div>
+
+            <div id="products-data-modal" class="modal" draggable="true">
+                <div class="modal-close-btn">
+                    <button id="products-data-modal-close-btn" type="button">
+                        <img src="./icons/icon-close-modal.svg" alt="botão para fechar modal" />
+                    </button>
+                </div>
+
+                <h1 class="subtitle">Dados do produto</h1>
+                
+                <div class="modal-content">
+                    <div id="product-data">
+                        <label>ID</label>
+                        <p id="product-id"></p>
+
+                        <label>Nome</label>
+                        <p id="product-name"></p>
+
+                        <label>Descrição</label>
+                        <p id="product-description"></p>
+
+                        <label>Valor</label>
+                        <p id="product-value"></p>
+
+                        <label>Incluído em</label>
+                        <p id="product-included-at"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="edit-product-modal" class="modal">
+                <div class="modal-close-btn">
+                    <button id="edit-product-modal-close-btn" type="button">
+                        <img src="./icons/icon-close-modal.svg" alt="fechar modal" />
+                    </button>
+                </div>
+
+                <h1 class="subtitle">Edição de produto</h1>
+
+                <form id="update-form">
+                    <input id="edit-id" name="edit-id" type="hidden" />
+
+                    <div class="input">
+                        <label id="edit-name-label" for="edit-name">Nome:</label>
+                        <input id="edit-name" name="edit-name" type="text" />
+                        <p id="edit-name-error" class="error"></p>
+                    </div>
+        
+                    <div class="input">
+                        <label id="edit-description-label" for="edit-description">Descrição:</label>
+                        <input id="edit-description" name="edit-description" type="text" />
+                        <p id="edit-description-error" class="error"></p>
+                    </div>
+        
+                    <div class="input">
+                        <label id="edit-value-label" for="edit-value">Valor (R$):</label>
+                        <input id="edit-value" name="edit-value" type="text" />
+                        <p id="edit-value-error" class="error"></p>
+                    </div>
+        
+                    <button id="update-btn" class="black-btn" type="submit">Salvar produto</button>
+        
+                    <p id="edit-error" class="error"></p>
+                </form>
+            </div>
+
+            <div id="action-confirmation-modal" class="modal">
+                <div class="modal-content">
+                    <p>Tem certeza que deseja excluir o produto?</p>
+
+                    <div>
+                        <button id="register-btn" class="black-btn" type="submit">Sim</button>
+                        <button id="register-btn" class="red-btn" type="submit">Não</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="index.js"></script>
+    </body>
+</html>
