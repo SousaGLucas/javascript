@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.title {
+    width: calc(100% - 60px);
+    text-align: center;
+    color: #212121;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 50px 0 20px 0;
+}
+
+.subtitle {
+    width: calc(100% - 60px);
+    text-align: center;
+    color: #212121;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.equation {
+    width: calc(100% - 60px);
+    text-align: center;
+    color: #212121;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 40px;
+    word-wrap: break-word;
+}
+
+input {
+    width: 280px;
+    max-width: calc(100% - 60px);
+    height: 25px;
+    padding: 5px 10px;
+    color: #212121;
+    border: solid 0.5px #212121;
+    border-radius: 3px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+

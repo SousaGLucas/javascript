@@ -1,35 +1,6 @@
 // PRODUCTS
 
-    let products = [
-        {
-            id: 1,
-            name: "Produto A",
-            description: "Descrição do produto A",
-            value: 23,
-            includedAt: 1655867659464
-        },
-        {
-            id: 2,
-            name: "Produto D",
-            description: "Descrição do produto D",
-            value: 11.5,
-            includedAt: 1655867762617
-        },
-        {
-            id: 3,
-            name: "Produto B",
-            description: "Descrição do produto B",
-            value: 11,
-            includedAt: 1655867778475
-        },
-        {
-            id: 4,
-            name: "Produto C",
-            description: "Descrição do produto C",
-            value: 32.3,
-            includedAt: 1655867790759
-        }
-    ];
+    let products = [];
 
 
 // VARIABLES

@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+
+.title {
+    width: calc(100% - 60px);
+    text-align: center;
+    color: #212121;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 50px 0 20px 0;
+}
+
+#board {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 606px;
+}
+
+.element {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    color: #212121;
+    font-family: "Poppins", sans-serif;
+    font-size: 100px;
+    font-weight: 600;
+    cursor: default;
+}
+
+.horizontal {
+    display: none;
+    width: 200px;
+    height: 5px;
+    background-color: #FF2030;
+    position: fixed;
+}
+
+.vertical {
+    display: none;
+    width: 5px;
+    height: 200px;
+    background-color: #FF2030;
+    position: fixed;
+}
+
+.diagonal-desc {
+    display: none;
+    width: 5px;
+    height: calc(200px * 1.414213);
+    background-color: #FF2030;
+    transform: rotate(-45deg);
+    position: fixed;
+}
+
+.diagonal-asc {
+    display: none;
+    width: 5px;
+    height: calc(200px * 1.414213);
+    background-color: #FF2030;
+    transform: rotate(45deg);
+    position: fixed;
+}
